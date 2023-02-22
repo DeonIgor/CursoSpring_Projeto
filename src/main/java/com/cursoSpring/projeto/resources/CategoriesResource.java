@@ -2,7 +2,6 @@ package com.cursoSpring.projeto.resources;
 
 import com.cursoSpring.projeto.domain.Category;
 import com.cursoSpring.projeto.services.CategoryService;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -32,7 +31,6 @@ public class CategoriesResource {
     Category response = categoryService.findById(id).orElse(null);
     if (response == null) return ResponseEntity
       .status(HttpStatusCode.valueOf(400))
-      .body(null);
-    return ResponseEntity.ok().body(null);
+      .body("Item not found!"); else return ResponseEntity.ok().body(response);
   }
 }

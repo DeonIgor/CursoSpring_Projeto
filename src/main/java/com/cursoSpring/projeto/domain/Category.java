@@ -4,7 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +17,9 @@ public class Category implements Serializable {
   private Integer id;
 
   private String name;
+
+  @ManyToMany(mappedBy = "categories")
+  private List<Product> products = new ArrayList<>();
 
   public Category() {}
 
@@ -37,6 +43,14 @@ public class Category implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public List<Product> getProducts() {
+    return this.products;
+  }
+
+  public void setProducts(List<Product> products) {
+    this.products = products;
   }
 
   @Override

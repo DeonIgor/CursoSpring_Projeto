@@ -2,6 +2,7 @@ package com.cursoSpring.projeto.resources;
 
 import com.cursoSpring.projeto.domain.Category;
 import com.cursoSpring.projeto.services.CategoryService;
+import com.cursoSpring.projeto.services.exceptions.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -27,10 +28,9 @@ public class CategoriesResource {
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public ResponseEntity<?> findById(@PathVariable Integer id) {
-    Category response = categoryService.findById(id).orElse(null);
-    if (response == null) return ResponseEntity
-      .status(HttpStatusCode.valueOf(400))
-      .body("Item not found!"); else return ResponseEntity.ok().body(response);
+  public ResponseEntity<?> findById(@PathVariable Integer id)
+    throws ObjectNotFoundException {
+    Category response = categoryService.findById(id);
+    return ResponseEntity.ok().body(response);
   }
 }

@@ -1,11 +1,16 @@
 package com.cursoSpring.projeto;
 
+import com.cursoSpring.projeto.domain.Address;
 import com.cursoSpring.projeto.domain.Category;
 import com.cursoSpring.projeto.domain.City;
+import com.cursoSpring.projeto.domain.Client;
 import com.cursoSpring.projeto.domain.Product;
 import com.cursoSpring.projeto.domain.State;
+import com.cursoSpring.projeto.enums.ClientType;
+import com.cursoSpring.projeto.repositories.AddressRepository;
 import com.cursoSpring.projeto.repositories.CategoryRepository;
 import com.cursoSpring.projeto.repositories.CityRepository;
+import com.cursoSpring.projeto.repositories.ClientRepository;
 import com.cursoSpring.projeto.repositories.ProductRepository;
 import com.cursoSpring.projeto.repositories.StateRepository;
 import java.util.Arrays;
@@ -27,6 +32,12 @@ public class ProjetoApplication implements CommandLineRunner {
 
   @Autowired
   private CityRepository cityRepository;
+
+  @Autowired
+  private ClientRepository clientRepository;
+
+  @Autowired
+  private AddressRepository addressRepository;
 
   public static void main(String[] args) {
     SpringApplication.run(ProjetoApplication.class, args);
@@ -66,5 +77,39 @@ public class ProjetoApplication implements CommandLineRunner {
 
     stateRepository.saveAll(Arrays.asList(state1, state2));
     cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+
+    Client cli1 = new Client(
+      null,
+      "Fernando",
+      "fernando@gmail.com",
+      "693.192.018-97",
+      ClientType.PESSOAFISICA
+    );
+
+    Address ad1 = new Address(
+      null,
+      "Rua Santa Efigenia",
+      "67",
+      "Casa",
+      "Bairro das Rosas",
+      "65046-306",
+      city1,
+      cli1
+    );
+    Address ad2 = new Address(
+      null,
+      "Rua Mongolia",
+      "251",
+      "Ap 505, Torre 3",
+      "Bairro Industrial",
+      "65557-674",
+      city3,
+      cli1
+    );
+
+    cli1.getAdresses().addAll(Arrays.asList(ad1, ad2));
+
+    clientRepository.saveAll(Arrays.asList(cli1));
+    addressRepository.saveAll(Arrays.asList(ad1, ad2));
   }
 }

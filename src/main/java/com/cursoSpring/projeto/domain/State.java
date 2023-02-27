@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class State {
   @Id
@@ -17,6 +19,7 @@ public class State {
 
   private String name;
 
+  @JsonBackReference
   @OneToMany(mappedBy = "state")
   private List<City> cities = new ArrayList<>();
 

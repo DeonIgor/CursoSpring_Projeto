@@ -8,6 +8,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class City {
   @Id
@@ -16,6 +18,7 @@ public class City {
 
   private String name;
 
+  @JsonManagedReference
   @ManyToOne
   @JoinColumn(name = "state_id")
   private State state = new State();

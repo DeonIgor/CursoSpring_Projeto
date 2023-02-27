@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +21,10 @@ public class Address {
   private String complement;
   private String district;
   private String cep;
+
+  @OneToOne
+  @JoinColumn(name = "city_id")
+  private City city = new City();
 
   @JsonBackReference
   @ManyToOne
@@ -35,6 +40,7 @@ public class Address {
     String complement,
     String district,
     String cep,
+    City city,
     Client client
   ) {
     this.id = id;
@@ -43,6 +49,7 @@ public class Address {
     this.complement = complement;
     this.district = district;
     this.cep = cep;
+    this.city = city;
     this.client = client;
   }
 
@@ -92,6 +99,14 @@ public class Address {
 
   public void setCep(String cep) {
     this.cep = cep;
+  }
+
+  public City getCity() {
+    return this.city;
+  }
+
+  public void setCity(City city) {
+    this.city = city;
   }
 
   public Client getClient() {
